@@ -16,7 +16,7 @@
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "pnpm@10.9.0",
+  "packageManager": "pnpm@10.30.2",
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@rollup/plugin-commonjs": "^29.0.0",
