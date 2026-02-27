@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
+      packages: write
     if: github.ref == 'refs/heads/main'
     concurrency:
       group: deploy
@@ -53,42 +53,23 @@ jobs:
       - name: Build Docker image
         shell: bash
         run: docker build -t europe-west1-docker.pkg.dev/sitnikru/web/server:latest ./
-      - name: Auth Google Cloud
-        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+      - name: Build Docker image
+        run: docker build -t ghcr.io/ai/sitnik.es:latest .
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
         with:
-          workload_identity_provider: projects/187076158470/locations/global/workloadIdentityPools/github/providers/github
-          service_account: github-deploy@sitnikru.iam.gserviceaccount.com
-      - name: Install Google Cloud
-        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3.0.1
-      - name: Auth Docker
-        shell: bash
-        run: gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push Docker image
-        shell: bash
-        run: docker push europe-west1-docker.pkg.dev/sitnikru/web/server:latest
-      - name: Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@2028e2d7d30a78c6910e0632e48dd561b064884d # v3.0.1
+        run: docker push ghcr.io/ai/sitnik.es:latest
+      - name: Trigger Dokploy Deployment
+        run: |
+          curl --fail ${{ secrets.DOKPLOY_DEPLOY_URL }}
+      - name: Clean previous images
+        uses: dataaxiom/ghcr-cleanup-action@cd0cdb900b5dbf3a6f2cc869f0dbb0b8211f50c4 # v1.0.16
         with:
-          service: sitnik
-          region: europe-west1
-          image: europe-west1-docker.pkg.dev/sitnikru/web/server:latest
-          flags: |
-            --allow-unauthenticated
-            --service-account=github-deploy@sitnikru.iam.gserviceaccount.com
-      - name: Move traffic to new revision
-        shell: bash
-        run: |
-          gcloud run services update-traffic sitnik \
-            --project sitnikru \
-            --region europe-west1 \
-            --to-latest
-      - name: Delete previous images
-        shell: bash
-        run: |
-          untagged=$(gcloud artifacts docker images list europe-west1-docker.pkg.dev/sitnikru/web/server --include-tags --format="get(version)" --filter="NOT tags:*")
-          for digest in $untagged; do
-            image=europe-west1-docker.pkg.dev/sitnikru/web/server@$digest
-            echo "Deleting unused image: $image"
-            gcloud artifacts docker images delete $image --quiet
-          done
+          package: sitnik.es
+          owner: ai
+          delete-untagged: true
+          token: ${{ secrets.GITHUB_TOKEN }}
