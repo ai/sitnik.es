@@ -9,4 +9,4 @@ LABEL org.opencontainers.image.description="Andrey Sitnik personal page"
 LABEL org.opencontainers.image.licenses=MIT
 
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-  CMD ["/bin/httpcheck", "http://localhost:8000/"]
+  CMD ["/bin/httpcheck", "http://localhost:8000/en/"]
