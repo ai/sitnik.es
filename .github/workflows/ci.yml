@@ -51,9 +51,6 @@ jobs:
       - name: Build static files
         run: pnpm build
       - name: Build Docker image
-        shell: bash
-        run: docker build -t europe-west1-docker.pkg.dev/sitnikru/web/server:latest ./
-      - name: Build Docker image
         run: docker build -t ghcr.io/ai/sitnik.es:latest .
       - name: Login to GitHub Container Registry
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
