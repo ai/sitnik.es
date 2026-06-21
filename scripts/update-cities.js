@@ -47,7 +47,7 @@ function inside(address, ...value) {
 function prettyJson(data) {
   if (!Array.isArray(data)) {
     data = Object.keys(data)
-      .sort()
+      .toSorted()
       .reduce((sorted, key) => {
         sorted[key] = data[key]
         return sorted
@@ -192,7 +192,7 @@ async function getDots(data) {
   let sent = false
   await Promise.all(
     data.places.map(async place => {
-      let latlng = place.geometry.coordinates.reverse()
+      let latlng = place.geometry.coordinates.toReversed()
       if (latlng[0] === 0 && latlng[1] === 0) {
         let urlDots = place.properties.google_maps_url.match(URL_WITH_DOT)
         if (urlDots) {
@@ -230,7 +230,7 @@ function reduceDots(data) {
   print('Cities:   ' + pico.bold(data.dots.length))
 
   data.distant = data.distant
-    .sort((a, b) => a[0] + a[1] - b[0] - b[1])
+    .toSorted((a, b) => a[0] + a[1] - b[0] - b[1])
     .map(i => [round2(i[0]), round2(i[1])])
 
   return data
@@ -288,7 +288,7 @@ async function foundCountries(data) {
       countries[city] = true
     }
   }
-  data.countries = Object.keys(countries).sort()
+  data.countries = Object.keys(countries).toSorted()
   print('Countries: ' + pico.bold(data.countries.length))
   return data
 }

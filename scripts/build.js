@@ -198,7 +198,7 @@ async function saveLocationCache(location) {
     latitude: location.latitude,
     longitude: location.longitude
   })
-  await Promise.all([writeFile(join(DIST, 'location.json'), simpleLocation)])
+  await writeFile(join(DIST, 'location.json'), simpleLocation)
 }
 
 async function updateCSP(js, css) {

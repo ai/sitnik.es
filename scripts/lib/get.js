@@ -12,7 +12,7 @@ export function get(url, maxAttempts = 1, attempt = 1) {
         try {
           data = JSON.parse(buffer)
         } catch (e) {
-          process.stderr.write(buffer.toString())
+          process.stderr.write(buffer)
           reject(e)
           return
         }
