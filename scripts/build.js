@@ -17,12 +17,12 @@ import postcssLoadConfig from 'postcss-load-config'
 import posthtml from 'posthtml'
 import pug from 'pug'
 import { rollup } from 'rollup'
-import stripDebug from 'strip-debug'
 import { minify } from 'terser'
 
 import { COUNTRIES, DIST, LOCATION, NGINX, SRC } from './lib/dirs.js'
 import { htmlCompressor } from './lib/html-compressor.js'
 import { MyError } from './lib/my-error.js'
+import stripDebug from './strip-debug-plugin.js'
 
 let gzip = promisify(zlib.gzip)
 
