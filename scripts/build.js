@@ -81,6 +81,7 @@ async function loadVisited() {
 
 async function loadLocation() {
   let location = {
+    ca: { city: 'Barcelona', country: 'Espanya' },
     en: { city: 'Barcelona', country: 'Spain' },
     es: { city: 'Barcelona', country: 'España' },
     latitude: 41.38,
@@ -162,7 +163,7 @@ async function compileScripts(images) {
 
 async function compileHtml(visited, location, js, css, images) {
   await Promise.all(
-    ['en', 'es', 'ru'].map(async lang => {
+    ['ca', 'en', 'es', 'ru'].map(async lang => {
       let pugFile = join(SRC, lang, 'index.pug')
       let pugSource = await readFile(pugFile)
       let pugFn = pug.compile(pugSource.toString(), { filename: pugFile })

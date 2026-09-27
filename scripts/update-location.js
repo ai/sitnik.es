@@ -38,18 +38,23 @@ async function loadName(latLng, lang) {
 }
 
 async function loadNames(latLng) {
-  let [ru, es, en] = await Promise.all([
+  let [ru, es, en, ca] = await Promise.all([
     loadName(latLng, 'ru'),
     loadName(latLng, 'es'),
-    loadName(latLng, 'en')
+    loadName(latLng, 'en'),
+    loadName(latLng, 'ca')
   ])
-  return { ...latLng, en, es, ru }
+  return { ...latLng, ca, en, es, ru }
 }
 
 async function wasNotChanged(cur) {
   if (!existsSync(LOCATION)) return false
   let last = JSON.parse(await read(LOCATION))
-  if (cur.latitude === last.latitude && cur.longitude === last.longitude) {
+  if (
+    last.ca &&
+    cur.latitude === last.latitude &&
+    cur.longitude === last.longitude
+  ) {
     process.stdout.write('Location was not changed\n')
     return true
   } else {
@@ -70,6 +75,7 @@ loadLatLng()
     let location = await loadNames(latLng)
     process.stdout.write(`${location.en.city}, ${location.en.country}\n`)
     process.stdout.write(`${location.es.city}, ${location.es.country}\n`)
+    process.stdout.write(`${location.ca.city}, ${location.ca.country}\n`)
     process.stdout.write(`${location.ru.city}, ${location.ru.country}\n`)
     await save(location)
   })

@@ -1,9 +1,9 @@
 doctype html
-html( lang="es" itemtype="https://schema.org/Person" itemscope )
+html( lang="ca" itemtype="https://schema.org/Person" itemscope )
   head
     meta( charset="UTF-8" )
     title Andrey Sitnik
-    meta( name="description" content="Contactos y proyectos de Andrey Sitnik" )
+    meta( name="description" content="Contactes i projectes d’Andrey Sitnik" )
     include ../base/head.pug
   body
     .layout
@@ -12,7 +12,7 @@ html( lang="es" itemtype="https://schema.org/Person" itemscope )
         a.photo( href="../photo/andreysitnik.jpg" target="_blank" )
           picture.photo_image
             source( srcset="../photo/photo.avif" type="image/avif" )
-            img.photo_image( src="../photo/photo.jpg" alt="Foto de Andrey Sitnik" itemprop="image" )
+            img.photo_image( src="../photo/photo.jpg" alt="Foto d’Andrey Sitnik" itemprop="image" )
 
         h1.layout_title
           span( itemprop="givenName" ) Andrey
@@ -27,13 +27,12 @@ html( lang="es" itemtype="https://schema.org/Person" itemscope )
           .globe_visited
             = visited.countries.length
             = ' '
-            = pluralize(visited.countries.length, 'país', 'países')
-            = ' visitado'
+            = pluralize(visited.countries.length, 'país visitat', 'països visitats')
 
           button.globe_location( type="button" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" tabindex="-1" )
-            span( itemprop="addressLocality" )= location.es.city
+            span( itemprop="addressLocality" )= location.ca.city
             = ', '
-            span( itemprop="addressCountry" )= location.es.country
+            span( itemprop="addressCountry" )= location.ca.country
 
       .layout_links
 
@@ -42,7 +41,7 @@ html( lang="es" itemtype="https://schema.org/Person" itemscope )
             a.link( href="mailto:andrey@sitnik.es" itemprop="email" )
               | andrey@sitnik.es
             .contacts_notes
-              a.link( href="https://keybase.io/iskin" itemprop="sameAs" rel="me" title="Clave pública GnuPG para verificar mi firma o cifrar el mensaje por mí" )
+              a.link( href="https://keybase.io/iskin" itemprop="sameAs" rel="me" title="Clau pública GnuPG per verificar la meva signatura o xifrar missatges per a mi" )
                 | PGP 73A1 B5BE 55B9 003D
           .contacts_item
             a.link.is-text( href="tel:+34613026399" itemprop="telephone" )
@@ -64,7 +63,7 @@ html( lang="es" itemtype="https://schema.org/Person" itemscope )
         ul.projects
           li.projects_item
             h2.projects_title
-              span.projects_name Redes sociales
+              span.projects_name Xarxes socials
               ul.projects_links
                 li.projects_link
                   a.link( href="https://mastodon.social/@sitnik_en" itemprop="sameAs" rel="me" )
@@ -76,14 +75,14 @@ html( lang="es" itemtype="https://schema.org/Person" itemscope )
                   a.link( href="https://twitter.com/andreysitnik" itemprop="sameAs" rel="me" )
                     | Twitter
             p
-              | Mis notas
+              | Les meves notes
 
           li.projects_item
             h2.projects_title
               a.link( href="https://github.com/ai" itemprop="sameAs" rel="me" )
                 | GitHub
             p
-              | He creado Autoprefixer, PostCSS, Browserslist, Nano ID y Nano Stores
+              | He creat Autoprefixer, PostCSS, Browserslist, Nano ID i Nano Stores
 
           li.projects_item
             h2.projects_title
@@ -99,12 +98,12 @@ html( lang="es" itemtype="https://schema.org/Person" itemscope )
                   a.link( href="https://t.me/sitnikfriday" itemprop="sameAs" rel="me" )
                     | Telegram
             p
-              | Mi proyecto sexopositivo
+              | El meu projecte sexpositiu
 
       .layout_language
         a.link( href="/en/" hreflang="en" rel="alternate" ) English
         span.layout_separator= ' '
-        a.link( href="/ca/" hreflang="ca" rel="alternate" ) Català
+        a.link( href="/es/" hreflang="es" rel="alternate" ) Castellano
         span.layout_separator= ' '
         a.link( href="/ru/" hreflang="ru" rel="alternate" ) Русский
 
